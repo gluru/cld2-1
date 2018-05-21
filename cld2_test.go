@@ -3,8 +3,8 @@ package cld2
 import "testing"
 
 func TestLanguageNameFromCode_withUnknown_success(t *testing.T) {
-	name := LanguageNameFromCode(UNKNOWN_LANGUAGE)
-	if UNKNOWN_LANGUAGE_NAME != name {
+	name := LanguageNameFromCode(UnknownLanguage)
+	if UnknownLanguageName != name {
 		t.Fatalf("Expected unknown language, found %s.", name)
 	}
 }

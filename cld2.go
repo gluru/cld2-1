@@ -12,11 +12,11 @@ package cld2
 import "C"
 import "unsafe"
 
-// UNKNOWN_LANGUAGE language code for unknown languages.
-const UNKNOWN_LANGUAGE = "un"
+// UnknownLanguage language code for unknown languages.
+const UnknownLanguage = "un"
 
-// UNKNOWN_LANGUAGE_NAME label for unknown languages.
-const UNKNOWN_LANGUAGE_NAME = "UNKNOWN_LANGUAGE"
+// UnknownLanguageName label for unknown languages.
+const UnknownLanguageName = "UNKNOWN_LANGUAGE"
 
 // DetectLang returns the language code for detected language
 // in the given text.
@@ -24,7 +24,7 @@ func DetectLang(text string) string {
 	cs := C.CString(text)
 	res := C.DetectLang(cs, -1)
 	C.free(unsafe.Pointer(cs))
-	lang := UNKNOWN_LANGUAGE
+	lang := UnknownLanguage
 	if res != nil {
 		lang = C.GoString(res)
 	}
@@ -33,14 +33,14 @@ func DetectLang(text string) string {
 
 // LanguageNameFromCode returns a human readable language name
 func LanguageNameFromCode(code string) string {
-	if code == "" || code == UNKNOWN_LANGUAGE {
-		return UNKNOWN_LANGUAGE_NAME
+	if code == "" || code == UnknownLanguage {
+		return UnknownLanguageName
 	}
 	cs := C.CString(code)
 	res := C.LanguageNameFromCode(cs)
 	C.free(unsafe.Pointer(cs))
 
-	name := UNKNOWN_LANGUAGE_NAME
+	name := UnknownLanguageName
 	if res != nil {
 		name = C.GoString(res)
 	}
