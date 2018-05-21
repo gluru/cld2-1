@@ -21,15 +21,19 @@ const UnknownLanguageName = "UNKNOWN_LANGUAGE"
 
 // DetectLang returns the language code for detected language
 // in the given text.
-func DetectLang(text string) string {
+func DetectLang(text string) (string, bool) {
 	cs := C.CString(text)
-	res := C.DetectLang(cs, -1)
-	C.free(unsafe.Pointer(cs))
+	defer C.free(unsafe.Pointer(cs))
+
+	reliable := C.int(0)
+
+	res := C.DetectLang(cs, -1, &reliable)
+
 	lang := UnknownLanguage
 	if res != nil {
 		lang = C.GoString(res)
 	}
-	return lang
+	return lang, reliable == 1
 }
 
 // LanguageNameFromCode returns a human readable language name

@@ -2,7 +2,7 @@
 extern "C" {
 #endif
 
-const char* DetectLang(char *data, int length);
+const char* DetectLang(char *data, int length, int* reliable);
 
 const char* LanguageNameFromCode(char *data);
 
