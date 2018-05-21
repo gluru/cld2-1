@@ -6,21 +6,25 @@
 // For more information about CLD2, see https://code.google.com/p/cld2/.
 package cld2
 
+// #cgo LDFLAGS: -lstdc++
 // #include <stdlib.h>
 // #include "cld2.h"
 import "C"
 import "unsafe"
 
+// UNKNOWN_LANGUAGE language code for unknown languages.
 const UNKNOWN_LANGUAGE = "un"
+
+// UNKNOWN_LANGUAGE_NAME label for unknown languages.
 const UNKNOWN_LANGUAGE_NAME = "UNKNOWN_LANGUAGE"
 
-// DetectLangtect returns the language code for detected language
+// DetectLang returns the language code for detected language
 // in the given text.
 func DetectLang(text string) string {
 	cs := C.CString(text)
 	res := C.DetectLang(cs, -1)
 	C.free(unsafe.Pointer(cs))
-	var lang string
+	lang := UNKNOWN_LANGUAGE
 	if res != nil {
 		lang = C.GoString(res)
 	}
@@ -36,6 +40,9 @@ func LanguageNameFromCode(code string) string {
 	res := C.LanguageNameFromCode(cs)
 	C.free(unsafe.Pointer(cs))
 
-	name := C.GoString(res)
+	name := UNKNOWN_LANGUAGE_NAME
+	if res != nil {
+		name = C.GoString(res)
+	}
 	return name
 }
