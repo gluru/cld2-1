@@ -11,9 +11,11 @@ package cld2
 import "C"
 import "unsafe"
 
+const UNKNOWN_LANGUAGE = "un"
+
 // Detect returns the language code for detected language
 // in the given text.
-func Detect(text string) string {
+func DetectLang(text string) string {
 	cs := C.CString(text)
 	res := C.DetectLang(cs, -1)
 	C.free(unsafe.Pointer(cs))
@@ -22,4 +24,14 @@ func Detect(text string) string {
 		lang = C.GoString(res)
 	}
 	return lang
+}
+
+// LanguageNameFromCode returns a human readable language name
+func LanguageNameFromCode(code string) string {
+	cs := C.CString(code)
+	res := C.LanguageNameFromCode(cs)
+	C.free(unsafe.Pointer(cs))
+
+	name := C.GoString(res)
+	return name
 }

@@ -25,7 +25,7 @@ const char* DetectLang(char *data, int length) {
 
     CLD2::Language summary_lang = CLD2::UNKNOWN_LANGUAGE;
 
-    summary_lang = CLD2::ExtDetectLanguageSummary(data, 
+    summary_lang = CLD2::ExtDetectLanguageSummary(data,
             length,
             is_plain_text,
             &cldhints,
@@ -38,4 +38,8 @@ const char* DetectLang(char *data, int length) {
             &is_reliable);
 
     return CLD2::LanguageCode(summary_lang);
+}
+
+const char* LanguageNameFromCode(char *code) {
+  return CLD2::LanguageName(CLD2::GetLanguageFromName(code));
 }
