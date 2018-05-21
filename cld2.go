@@ -12,8 +12,9 @@ import "C"
 import "unsafe"
 
 const UNKNOWN_LANGUAGE = "un"
+const UNKNOWN_LANGUAGE_NAME = "UNKNOWN_LANGUAGE"
 
-// Detect returns the language code for detected language
+// DetectLangtect returns the language code for detected language
 // in the given text.
 func DetectLang(text string) string {
 	cs := C.CString(text)
@@ -28,6 +29,9 @@ func DetectLang(text string) string {
 
 // LanguageNameFromCode returns a human readable language name
 func LanguageNameFromCode(code string) string {
+	if code == "" || code == UNKNOWN_LANGUAGE {
+		return UNKNOWN_LANGUAGE_NAME
+	}
 	cs := C.CString(code)
 	res := C.LanguageNameFromCode(cs)
 	C.free(unsafe.Pointer(cs))
